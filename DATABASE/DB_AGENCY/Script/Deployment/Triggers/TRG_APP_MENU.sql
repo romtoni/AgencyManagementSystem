@@ -1,0 +1,22 @@
+CREATE OR REPLACE TRIGGER DB_AGENCY.TRG_APP_MENU
+BEFORE INSERT
+ON DB_AGENCY.APP_MENU 
+REFERENCING NEW AS New OLD AS Old
+FOR EACH ROW
+DECLARE
+tmpVar NUMBER;
+
+BEGIN
+   tmpVar := 0;
+
+   SELECT SQ_MENU_ID.NEXTVAL INTO tmpVar FROM dual;
+   :NEW.MENU_ID := tmpVar;
+
+   EXCEPTION
+     WHEN OTHERS THEN
+       -- Consider logging the error and then re-raise
+       RAISE;
+END ;
+/
+
+

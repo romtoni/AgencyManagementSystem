@@ -1,0 +1,22 @@
+/* Formatted on 24/02/2023 11:17:41 (QP5 v5.114.809.3010) */
+CREATE OR REPLACE FORCE VIEW DB_AGENCY.V_APP_MENU_ROLE_SELECTED
+(
+   MENU_ID,
+   MENU_NAME,
+   ROLE_ID,
+   ROLE_NAME,
+   IS_SELECT
+)
+AS
+     SELECT   C.MENU_ID,
+              C.MENU_NAME,
+              A.ROLE_ID,
+              A.ROLE_NAME,
+              B.IS_SELECT
+       FROM   APP_ROLE A, APP_ROLE_MENU B, APP_MENU C
+      WHERE       B.ROLE_ID = A.ROLE_ID
+              AND B.MENU_ID = C.MENU_ID
+              AND B.IS_SELECT = 'Y'
+   ORDER BY   C.MENU_ID ASC, A.ROLE_NAME ASC;
+
+

@@ -1,0 +1,22 @@
+CREATE OR REPLACE TRIGGER DB_AGENCY.TRG_APP_API_CLIENT
+BEFORE INSERT
+ON DB_AGENCY.APP_API_CLIENT 
+REFERENCING NEW AS New OLD AS Old
+FOR EACH ROW
+DECLARE
+tmpVar NUMBER;
+
+BEGIN
+   tmpVar := 0;
+
+   SELECT SQ_CLIENT_ID.NEXTVAL INTO tmpVar FROM dual;
+   :NEW.CLIENT_ID := tmpVar;
+
+   EXCEPTION
+     WHEN OTHERS THEN
+       -- Consider logging the error and then re-raise
+       RAISE;
+END ;
+/
+
+
